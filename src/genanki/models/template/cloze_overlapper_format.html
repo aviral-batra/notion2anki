@@ -1,0 +1,32 @@
+<div>
+        <h1 style="text-align: center;">{{Title}}</h1>
+</div>
+<hr>
+<div id="content">
+	<div>{{cloze:Content}}</div>
+	<div style="margin: 1rem">
+		<button onclick="ShowAll()">Show All</button>
+	</div>
+</div>
+
+<div id="all" style="display: none">
+	<div>{{All}}</div>
+	<div style="margin: 1rem">
+		<button onclick="HideAll()">Hide All</button>
+	</div>
+</div>
+
+<script>
+        const content = document.getElementById('content');		
+        const all = document.getElementById('all');		
+
+	function ShowAll() {
+		content.style.display = 'none';
+		all.style.display = 'block';
+        };
+        
+	function HideAll() {
+		content.style.display = 'block';
+		all.style.display = 'none';
+	};
+</script>

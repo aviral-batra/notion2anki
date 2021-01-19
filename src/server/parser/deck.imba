@@ -49,8 +49,6 @@ class CustomExporter
 
 export class DeckParser
 
-	prop ga
-
 	get name do self.payload[0].name
 
 	def constructor file_name, settings = {}, files
@@ -147,6 +145,21 @@ export class DeckParser
 									b += dom(p).html!
 						const note = {name: n, back: b}
 						if isCherry and !noteHasCherry(note)
+							return null
+						elif note.name.match(/list/)
+							const title = note.name
+							const index = toggleList.indexOf(t)
+							const content = b
+							const all = b
+
+							const contentParts = dom(b).find('ul').toArray!
+							console.log(contentParts.length)
+							# index = {"name": "Index"}, 
+							# {"name": "Title"}, <summary>...</summary>
+							# {"name": "Content"},
+							# {"name": "All"}
+							# console.log('index', index, 'title', title, 'content', content, 'all', all) 
+							# TODO: go through the list content
 							return null
 						else
 							return note												
