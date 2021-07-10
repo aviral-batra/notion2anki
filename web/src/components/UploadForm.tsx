@@ -1,13 +1,34 @@
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useEffect, useRef, useState } from "react";
 import ErrorMessage from "./ErrorMessage";
 import DownloadModal from "./modals/DownloadModal";
 
 const UploadForm = () => {
+  const [selectedFilename, setSelectedFilename] = useState("");
   const [uploading, setUploading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [downloadLink, setDownloadLink] = useState("");
   const [deckName, setDeckName] = useState("");
-  const [selectedFilename, setSelectedFilename] = useState("");
+
+  const fileInputRef = useRef(null);
+  const convertRef = useRef(null);
+
+  useEffect(() => {
+    const body = document.getElementsByTagName("body")[0];
+    body.ondragover = body.ondragenter = (event) => {
+      event.preventDefault();
+    };
+    body.ondrop = (event) => {
+      const dataTransfer = event.dataTransfer;
+      if (dataTransfer && dataTransfer.files.length > 0) {
+        /* @ts-ignore */
+        fileInputRef.current.files = dataTransfer.files;
+        setSelectedFilename(dataTransfer.files[0].name);
+        /* @ts-ignore */
+        convertRef.current.click();
+      }
+      event.preventDefault();
+    };
+  }, []);
 
   const handleSubmit = async (event: SyntheticEvent) => {
     event.preventDefault();
@@ -72,11 +93,17 @@ const UploadForm = () => {
       <h2 className="title has-text-centered">Notion to Anki</h2>
 
       {errorMessage && <ErrorMessage msg={errorMessage} />}
-      <div className="field">
-        <div className={`file is-centered is-boxed has-name`}>
+
+      <div>
+        <div className="has-text-centered">
+          <p>Drag a file and Drop it here</p>
+          <p className="my-2">
+            <i>or</i>
+          </p>
           <div className="field">
-            <label className="file-label">
+            <label>
               <input
+                ref={fileInputRef}
                 className="file-input"
                 type="file"
                 name="pakker"
@@ -85,37 +112,34 @@ const UploadForm = () => {
                 multiple={true}
                 onChange={(event) => fileSelected(event)}
               />
-              <span className="file-cta">
-                <span className="file-label">Click to Upload...</span>
-              </span>
-              <span className="file-name">
-                {selectedFilename || "My Notion Export.zip"}
-              </span>
+              <span className="button">Select</span>
             </label>
-            <div className="has-text-centered">
+          </div>
+          <div className="has-text-centered">
+            {selectedFilename && (
               <button
+                ref={convertRef}
                 style={{ marginTop: "2rem" }}
                 className={`button cta is-large is-primary ${
                   uploading ? "is-loading" : null
                 }`}
                 type="submit"
-                disabled={!selectedFilename || uploading}
               >
                 Convert
               </button>
-            </div>
-            {downloadLink && deckName && !errorMessage && (
-              <DownloadModal
-                title={"Download Ready 🥳"}
-                downloadLink={downloadLink}
-                deckName={deckName}
-                onClickClose={() => {
-                  setDownloadLink("");
-                  setDeckName("");
-                }}
-              />
             )}
           </div>
+          {downloadLink && deckName && !errorMessage && (
+            <DownloadModal
+              title={"Download Ready 🥳"}
+              downloadLink={downloadLink}
+              deckName={deckName}
+              onClickClose={() => {
+                setDownloadLink("");
+                setDeckName("");
+              }}
+            />
+          )}
         </div>
       </div>
     </form>

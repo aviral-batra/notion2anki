@@ -38,6 +38,20 @@ class CardOptionsStore {
   configure() {
     return [
       {
+        key: "add-notion-link",
+        label: "Add Notion Link",
+        value: _loadOption("add-notion-link", false),
+        description:
+          "Add a link to the Notion page where the toggle was created. Please this with the (Use Notion ID) to avoid duplicates.",
+      },
+      {
+        key: "use-notion-id",
+        label: "Use Notion ID",
+        value: _loadOption("use-notion-id", false),
+        description:
+          "By default we create a new id from your fields. This can cause duplicates and in those cases you want to enable the Notion ID which is more reliable and avoid duplicates.",
+      },
+      {
         key: "all",
         label: "Use All Toggle Lists",
         value: _loadOption("all", false),

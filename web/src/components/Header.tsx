@@ -1,9 +1,4 @@
-import { useState } from "react";
-
 import styled from "styled-components";
-
-import CTAButton from "./CTAButton";
-import CodeIcon from "./icons/CodeIcon";
 
 const Title = styled.h1`
   font-size: 1rem;
@@ -13,119 +8,65 @@ const Title = styled.h1`
 
 const StyledHeader = styled.header`
   flex-shrink: 0;
-  nav {
-    background: #5386e3;
+`;
+
+const NavBar = styled.nav`
+  padding: 1rem;
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+const Buttons = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+  grid-gap: 1rem;
+  max-width: 200px;
+  flex-direction: column;
+  @media (min-width: 1024px) {
+    flex-direction: row;
   }
 `;
 
 const Header = () => {
-  const [active, setActive] = useState(false);
-
   return (
     <StyledHeader>
-      <nav className="navbar is-link is-fixed-top">
-        <div className="navbar-brand">
-          <a className="navbar-item" href="/">
+      <NavBar>
+        <div>
+          <a href="/">
             <Title>2anki.net</Title>
           </a>
-          <div
-            data-target="navbarExampleTransparentExample"
-            className={`navbar-burger burger ${active ? "is-active" : null}`}
-            onClick={() => setActive(!active)}
+        </div>
+        <Buttons>
+          <a
+            className="button is-danger is-light"
+            rel="noreferrer"
+            target="_blank"
+            href="https://www.patreon.com/alemayhu"
           >
-            <span />
-            <span />
-            <span />
-          </div>
-        </div>
-        <div
-          id="navbarExampleTransparentExample"
-          className={`navbar-menu ${active ? "is-active" : null}`}
-        >
-          <div className="navbar-start">
-            <div className="navbar-item">
-              <CTAButton
-                destination="/upload"
-                text={"Create"}
-                isLarge={false}
-                onClickLink={() => setActive(false)}
-              />
-            </div>
-            <a
-              className="navbar-item"
-              rel="noreferrer"
-              target="_blank"
-              href="https://www.notion.so/alemayhu/Benefits-0d5fa2e18a8a44d782c72945b2bd413b"
-            >
-              Benefits
-            </a>
-            <a
-              className="navbar-item"
-              rel="noreferrer"
-              target="_blank"
-              href="https://www.notion.so/alemayhu/Contact-e76523187cc64961972b3ad4f7cb4c47"
-            >
-              Contact
-            </a>
-            <a
-              className="navbar-item"
-              rel="noreferrer"
-              target="_blank"
-              href="https://www.notion.so/alemayhu/FAQ-ef01be9c9bac41689a4d749127c14301"
-            >
-              FAQ
-            </a>
-            <a
-              className="navbar-item"
-              rel="noreferrer"
-              target="_blank"
-              href="https://www.notion.so/alemayhu/Privacy-38c6e8238ac04ea9b2485bf488909fd0"
-            >
-              Privacy
-            </a>
-            <a
-              className="navbar-item"
-              rel="noreferrer"
-              target="_blank"
-              href="https://www.notion.so/alemayhu/Useful-Links-0f3051946a2d4b71ae31610da76b28a8"
-            >
-              Useful Links
-            </a>
-            <a
-              className="navbar-item"
-              rel="noreferrer"
-              target="_blank"
-              href="https://github.com/alemayhu/notion2anki"
-            >
-              <CodeIcon />
-            </a>
-          </div>
-          <div className="navbar-end">
-            <div className="navbar-item">
-              <a
-                className="button is-danger is-light"
-                rel="noreferrer"
-                target="_blank"
-                href="https://www.patreon.com/alemayhu"
-              >
-                <span style={{ fontWeight: "bold" }}>
-                  🧡 &nbsp;Become a Patron
-                </span>
-              </a>
-            </div>
-            <div className="navbar-item">
-              <a
-                className="button is-info is-light"
-                rel="noreferrer"
-                target="_blank"
-                href="https://github.com/sponsors/alemayhu"
-              >
-                <span style={{ fontWeight: "bold" }}>💙 &nbsp;Sponsor</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </nav>
+            <span style={{ fontWeight: "bold" }}>🧡 &nbsp;Become a Patron</span>
+          </a>
+          <a
+            className="button is-info is-light"
+            rel="noreferrer"
+            target="_blank"
+            href="https://github.com/sponsors/alemayhu"
+          >
+            <span style={{ fontWeight: "bold" }}>💙 &nbsp;Sponsor</span>
+          </a>
+        </Buttons>
+      </NavBar>
+      <ins
+        className="adsbygoogle"
+        style={{ display: "block" }}
+        data-ad-client="ca-pub-9593032741719801"
+        data-ad-slot="7148911174"
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      ></ins>
     </StyledHeader>
   );
 };

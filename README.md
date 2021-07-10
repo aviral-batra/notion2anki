@@ -1,4 +1,4 @@
-<p align="center"><img width="256" src="https://github.com/alemayhu/Notion-to-Anki/blob/dev/web/public/mascot/Notion%201.png?raw=true" alt="Notion to Anki logo" /></p>
+<p align="center"><img width="256" src="https://github.com/alemayhu/Notion-to-Anki/blob/master/web/public/mascot/Notion%201.png?raw=true" alt="Notion to Anki logo" /></p>
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/5da03a4d-2c54-4343-8949-33124d2211e5/deploy-status)](https://app.netlify.com/sites/vibrant-swirles-654fce/deploys) [![Discord](https://img.shields.io/discord/723998078201495642)](https://discord.com/invite/PSKC3uS) [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=Follow%20%40aalemayhu)](https://twitter.com/aalemayhu)
 
@@ -91,8 +91,8 @@ While not required, [nvm](https://github.com/nvm-sh/nvm) is a good tool to make 
 First make sure you have the dependencies installed
 
 ```bash
-yarn --cwd server install
-yarn --cwd web install
+npm --prefix server install
+npm --prefix web install
 ```
 
 An extra dependency on the server is [python3](https://www.python.org/downloads/) and the [genanki](https://github.com/kerrickstaley/genanki) module, make sure you install them.
@@ -109,14 +109,14 @@ Depending on wether you want to run the web interface or backend server the comm
 
 ```bash
 cd server
-yarn dev
+npm run dev
 ```
 
 #### Running the Web Server
 
 ```bash
 cd web
-yarn start
+npm run start
 ```
 
 To actually see the app running you need to either visit the local url in a browser or launch the app with

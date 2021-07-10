@@ -1,6 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import { Message, Column, Columns } from "trunx";
 
 import StoreContext from "../store/StoreContext";
 import WarningMessage from "../components/WarningMessage";
@@ -9,6 +8,7 @@ import SettingsIcon from "../components/icons/SettingsIcon";
 import SettingsModal from "../components/modals/SettingsModal";
 
 import SUPPORTERS from "../Supporters";
+import VideoSection from "../components/VideoSection";
 
 // A custom hook that builds on useLocation to parse
 // the query string for you.
@@ -58,9 +58,12 @@ const UploadPage = () => {
           onClickClose={() => setShowSettings(false)}
         />
       </div>
-      <Message style={{ maxWidth: "480px", margin: "1rem auto" }} isInfo>
-        <Message.Header>Thank you to my supporters!</Message.Header>
-        <Message.Body>
+      <div
+        className="message is-info"
+        style={{ maxWidth: "480px", margin: "1rem auto" }}
+      >
+        <div className="message-header">Thank you to my supporters!</div>
+        <div className="message-body">
           <p> This project is 100% free and will remain free ✌️ </p>
           <p>
             We only support<span> </span>
@@ -98,9 +101,9 @@ const UploadPage = () => {
             #stillfree
             <hr />
           </div>
-          <Columns hasTextCentered>
+          <div className="columns has-text-centered">
             {SUPPORTERS.map((patreon) => (
-              <Column key={patreon.link} isInlineFlexMobile>
+              <div className="column is-inline-flex-mobile" key={patreon.link}>
                 <figure className="image is-32x32">
                   <img
                     loading="lazy"
@@ -114,9 +117,9 @@ const UploadPage = () => {
                     <span className="tag is-black">{patreon.name}</span>
                   )}
                 </figure>
-              </Column>
+              </div>
             ))}
-          </Columns>
+          </div>
           <p>
             {" "}
             Due to privacy only{" "}
@@ -125,25 +128,7 @@ const UploadPage = () => {
             <a href="https://github.com/sponsors/alemayhu">GitHub sponsors</a>{" "}
             will be displayed above. This is to respect their privacy.
           </p>
-        </Message.Body>
-      </Message>
-      <div className="has-text-centered">
-        <hr />
-        <h3 className="title is-3">
-          Video Tutorial: Read Faster, Remember More
-        </h3>
-        <p className="subtitle">
-          Incremental Reading with Anki, Notion and notion2anki
-        </p>
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/4PdhlNbBqXo"
-          title="YouTube video player"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen={true}
-        ></iframe>
+        </div>
       </div>
     </div>
   );

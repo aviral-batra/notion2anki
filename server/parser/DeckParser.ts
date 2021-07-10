@@ -88,6 +88,11 @@ export class DeckParser {
     return note.name.includes(avocado) || note.name.includes("🥑");
   }
 
+  noteHasRefreshIcon(name: string) {
+    const refreshIcon = "&#x1F504";
+    return name.includes(refreshIcon) || name.includes("🔄");
+  }
+
   findToggleLists(dom: cheerio.Root) {
     const selector =
       this.settings.isCherry || this.settings.isAll
@@ -117,6 +122,24 @@ export class DeckParser {
     return style;
   }
 
+  getLink(pageId: string | undefined, note: Note): string | null {
+    try {
+      const page = pageId!.replace(/-/g, "");
+      const link = `https://www.notion.so/${page}#${note.notionId}`;
+      return `
+                <a
+                style="text-decoration: none; color: grey;"
+                href="${link}">
+                  Open in Notion
+                </a>
+                `;
+    } catch (error) {
+      console.info("experienced error while getting link");
+      console.error(error);
+      return null;
+    }
+  }
+
   handleHTML(
     fileName: string,
     contents: string,
@@ -130,6 +153,7 @@ export class DeckParser {
     );
     let name = deckName || dom("title").text();
     let style = dom("style").html();
+    const pageId = dom("article").attr("id");
     if (style) {
       style = style.replace(/white-space: pre-wrap;/g, "");
       style = this.setFontSize(style);
@@ -215,6 +239,13 @@ export class DeckParser {
                 return _b;
               })();
               const note = new Note(front || "", backSide);
+              note.notionId = parentUL.attr("id");
+              if (note.notionId && this.settings.addNotionLink) {
+                const link = this.getLink(pageId, note);
+                if (link !== null) {
+                  note.back += link;
+                }
+              }
               if (
                 (this.settings.isAvocado && this.noteHasAvocado(note)) ||
                 (this.settings.isCherry && !this.noteHasCherry(note))
@@ -318,7 +349,11 @@ export class DeckParser {
         /\.\.\//g,
         ""
       );
-      file = files.find((f) => f.name === lookup);
+      file = files.find((f) => {
+        if (f.name === lookup || f.name.endsWith(filePath)) {
+          return f;
+        }
+      });
       if (!file) {
         console.warn(
           `Missing relative path to ${filePath} used ${exporter.firstDeckName}`
@@ -609,10 +644,12 @@ export class DeckParser {
           addThese.push(note);
         }
 
-        if (this.settings.reversed) {
+        if (this.settings.reversed || this.noteHasRefreshIcon(card.name)) {
           const tmp = card.back;
           card.back = card.name;
           card.name = tmp;
+          // Due to backwards compatability, do not increment number here
+          card.number = -1;
         }
       }
       deck.cards = deck.cards.concat(addThese);

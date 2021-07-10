@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import styled from "styled-components";
 
+import NotionConnectPage from "./pages/NotionConnectPage";
 import TemplatePage from "./pages/Templates/TemplatePage";
 import UploadPage from "./pages/UploadPage";
 import HomePage from "./pages/Home";
@@ -10,6 +11,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import CardOptionsStore from "./store/Options";
 import StoreContext from "./store/StoreContext";
+import GlobalStyle from "./GlobalStyle";
 
 const Layout = styled.div`
   display: flex;
@@ -33,27 +35,33 @@ function App() {
   const store = new CardOptionsStore();
 
   return (
-    <StoreContext.Provider value={store}>
-      <Router>
-        <Layout>
-          <Header />
-          <Container>
-            <Switch>
-              <Route path="/tm">
-                <TemplatePage />
-              </Route>
-              <Route path="/upload">
-                <UploadPage />
-              </Route>
-              <Route path="/">
-                <HomePage />
-              </Route>
-            </Switch>
-          </Container>
-          <Footer />
-        </Layout>
-      </Router>
-    </StoreContext.Provider>
+    <>
+      <GlobalStyle />
+      <StoreContext.Provider value={store}>
+        <Router>
+          <Layout>
+            <Header />
+            <Container>
+              <Switch>
+                <Route path="/tm">
+                  <TemplatePage />
+                </Route>
+                <Route path="/upload">
+                  <UploadPage />
+                </Route>
+                <Route path="/connect-notion">
+                  <NotionConnectPage />
+                </Route>
+                <Route path="/">
+                  <HomePage />
+                </Route>
+              </Switch>
+            </Container>
+            <Footer />
+          </Layout>
+        </Router>
+      </StoreContext.Provider>
+    </>
   );
 }
 
